@@ -1,0 +1,408 @@
+{
+	"info": {
+		"_postman_id": "16ed9eac-afac-4ee7-af78-a703284bd7ba",
+		"name": "GithubApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19801828"
+	},
+	"item": [
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "Get_all_issues",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check body lenght\", function(){\r",
+									"    var body = pm.response.json();\r",
+									"    pm.expect(body.lenght).to.equal(4);\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.github.com/repos/{{user}}/{{repo}}/issues",
+							"protocol": "https",
+							"host": [
+								"api",
+								"github",
+								"com"
+							],
+							"path": [
+								"repos",
+								"{{user}}",
+								"{{repo}}",
+								"issues"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_Single_issue",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"    let body=pm.response.json();\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Check Status Code\", function(){\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Check Status\", function(){\r",
+									"    pm.expect(pm.response.status).to.equal(\"OK\");\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Check issue URL\", function(){\r",
+									"    pm.expect(body.url, \"Body URL\").to.equal(\"https://api.github.com/repos/Nats1002/Postman/issues/6\");\r",
+									"})\r",
+									"pm.test(\"Check issue id\", function(){\r",
+									"    pm.expect(body.id, \"id property\").to.equal(1242138297);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.github.com/repos/{{user}}/{{repo}}/issues/6",
+							"protocol": "https",
+							"host": [
+								"api",
+								"github",
+								"com"
+							],
+							"path": [
+								"repos",
+								"{{user}}",
+								"{{repo}}",
+								"issues",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "Create_issue",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let body=pm.response.json();\r",
+									"let number = body.number;\r",
+									"\r",
+									"\r",
+									"pm.test(\"Check Status Code\", function(){\r",
+									"    pm.expect(pm.response.code).to.equal(201);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Check Status\", function(){\r",
+									"    pm.expect(pm.response.status).to.equal(\"Created\");\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Check issue URL\", function(){\r",
+									"    let url=\"https://api.github.com/repos/Nats1002/Postman/issues/\" + number;\r",
+									"    pm.expect(body.url, \"Body URL\").to.equal(url);\r",
+									"})\r",
+									"pm.test(\"Check issue id\", function(){\r",
+									"    pm.expect(body.id, \"id property\").to.greaterThan(1);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Nats1002",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"title\" : \"First issue from Postman\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.github.com/repos/{{user}}/{{repo}}/issues",
+							"protocol": "https",
+							"host": [
+								"api",
+								"github",
+								"com"
+							],
+							"path": [
+								"repos",
+								"{{user}}",
+								"{{repo}}",
+								"issues"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create_a_comment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let body=pm.response.json();\r",
+									"let number = body.number;\r",
+									"\r",
+									"\r",
+									"pm.test(\"Check Status Code\", function(){\r",
+									"    pm.expect(pm.response.code).to.equal(201);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Check Status\", function(){\r",
+									"    pm.expect(pm.response.status).to.equal(\"Created\");\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Check issue URL\", function(){\r",
+									"    let url=\"https://api.github.com/repos/Nats1002/Postman/issues/\" + number;\r",
+									"    pm.expect(body.url, \"Body URL\").to.equal(url);\r",
+									"})\r",
+									"pm.test(\"Check issue id\", function(){\r",
+									"    pm.expect(body.id, \"id property\").to.greaterThan(1);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Nats1002",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"body\": \"This is a comment\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.github.com/repos/{{user}}/{{repo}}/issues/8/comments",
+							"protocol": "https",
+							"host": [
+								"api",
+								"github",
+								"com"
+							],
+							"path": [
+								"repos",
+								"{{user}}",
+								"{{repo}}",
+								"issues",
+								"8",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create_issue_with_labels",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Nats1002",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Second issue from Postman with labels\",\r\n    \"labels\": [\r\n        \"bug\",\r\n        \"UI\",\r\n        \"user\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.github.com/repos/{{user}}/{{repo}}/issues",
+							"protocol": "https",
+							"host": [
+								"api",
+								"github",
+								"com"
+							],
+							"path": [
+								"repos",
+								"{{user}}",
+								"{{repo}}",
+								"issues"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Update",
+			"item": [
+				{
+					"name": "Update_issue",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Nats1002",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "https://api.github.com/repos/{{user}}/{{repo}}/issues/8",
+							"protocol": "https",
+							"host": [
+								"api",
+								"github",
+								"com"
+							],
+							"path": [
+								"repos",
+								"{{user}}",
+								"{{repo}}",
+								"issues",
+								"8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete",
+			"item": [
+				{
+					"name": "delete_issue",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Nats1002",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.github.com/repos/{{user}}/{{repo}}/issues/8",
+							"protocol": "https",
+							"host": [
+								"api",
+								"github",
+								"com"
+							],
+							"path": [
+								"repos",
+								"{{user}}",
+								"{{repo}}",
+								"issues",
+								"8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
